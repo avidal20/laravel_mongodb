@@ -1,0 +1,22 @@
+1- Instalar XAMPP - V PHP 7.1.4: https://www.apachefriends.org/xampp-files/7.1.4/xampp-win32-7.1.4-0-VC14-installer.exe
+2- Descargar el DLL mondodb correspondiente a la versión (PHP 7.1): http://pecl.php.net/package/mongodb/1.2.9/windows
+3- El archivo php_mongodb.dll debe de pegarse en la carpeta ext del directorio de php
+4- Agregar la linea: extension=php_mongodb.dll, en el archivo de php.ini
+5- En el portal local phpinfo verificamos la isntalación de mongo, filtrando mongodb
+6- Crear proyecto de laravel: composer create-project --prefer-dist laravel/laravel laravel_mongodb
+7- En la carpeta del proyecto ejecutamos el siguiente comando: composer require jenssegers/mongodb
+8- Agregar la siguiente linea en los provider: Jenssegers\Mongodb\MongodbServiceProvider::class,
+9- En el siguiente enlace se explica cuales son las lineas que se deben de agregar en el archivo database.php: https://github.com/jenssegers/laravel-mongodb
+
+/******[MongoDb]******/
+- Instalamos mongodb: http://www.mongodb.org/downloads?_ga=2.123620803.970819860.1495910110-610719210.1495909979}
+- Crear la carpeta: C:\data\db
+- Agregan la variable de intorno en path que apunte a la siguiente ruta: C:\Program Files\MongoDB\Server\3.4\bin
+- Desde CMD se inicia la conexion con el comando: mongod
+- Desde CMD se inician la instancia del gestor con: mongo
+
+/******[Crear Base de datos y asignar usuario en MongoDb]******/
+- Instalar ROBOMONGO para administrar la base de datos: https://robomongo.org/download
+
+/****[Utilizar Mongodb laravel]****/
+https://github.com/jenssegers/laravel-mongodb

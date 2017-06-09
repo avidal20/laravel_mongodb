@@ -27,15 +27,17 @@
         <!-- ./col -->
         <div class="col-md-4">
           <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>Caracter&iacute;sticas</h3>
-              <p>Caracter&iacute;sticas de producto</p>
+          <a href="{{route('features')}}">
+            <div class="small-box bg-green">
+              <div class="inner">
+                <h3>Caracter&iacute;sticas</h3>
+                <p>Caracter&iacute;sticas de producto</p>
+              </div>
+              <div class="icon">
+                <i class="ion-ios-gear"></i>
+              </div>
             </div>
-            <div class="icon">
-              <i class="ion-ios-gear"></i>
-            </div>
-          </div>
+          </a>
         </div>
         <!-- ./col -->
         <div class="col-md-4">

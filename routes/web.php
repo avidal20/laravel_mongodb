@@ -22,7 +22,13 @@ Auth::routes();
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
     Route::get('/', 'HomeController@index')->name('home');
+    
 
     //Rutas de modulos
+
+    // Features - Caracteristicas
+    Route::get('/features', 'FeatureController@index')->name('features');
+    Route::get('/features/sizes', 'FeatureController@sizes')->name('features.sizes');
+    Route::get('/features/colors', 'FeatureController@colors')->name('features.colors');
 
 });

@@ -16,13 +16,21 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('/home', 'HomeController@index');
 
 //Rutas de administracion
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('admin');
 
     //Rutas de modulos
+    Route::resource('category', 'Category\CategoryController',
+        [
+            'names' => 
+                [
+                    'index' => 'category.index',
+                ],
+        ]
+    );
 
 });

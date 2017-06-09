@@ -1,9 +1,31 @@
+ServerSignature Off
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
     </IfModule>
 
     RewriteEngine On
+
+    #securiry
+    RewriteCond %{THE_REQUEST} ^.*(\\r|\\n|%0A|%0D).*
+    RewriteRule .* - [R=404,L,NC]
+
+    RewriteCond %{QUERY_STRING} ("|%22|%23).*(|>|%3E|<|%3C|%23).* [NC]
+    RewriteRule ^(.*)$ - [R=404,L,NC]
+
+    RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+    RewriteRule ^(.*)$ - [R=404,L,NC]
+
+    RewriteCond %{QUERY_STRING} (javascript:).*(;).* [NC]
+    RewriteRule ^(.*)$ - [R=404,L,NC]
+
+    RewriteCond %{QUERY_STRING} (;|'|"|%22|%20).*(union|select|insert|drop|update|md5|benchmark|or|sleep|and|if).* [NC]
+    RewriteRule ^(.*)$ - [R=404,L,NC]
+    RewriteRule (;|<|>|'|`|") - [R=404,L,NC]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -18,3 +40,64 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+    Header set X-Frame-Options SAMEORIGIN
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options nosniff
+
+    #<FilesMatch "\.(appcache|atom|bbaw|bmp|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
+     #    Header unset X-Frame-Options
+    #</FilesMatch>
+    <FilesMatch "\.(ico|js|css|gif|png|jpg|jpeg|txt|html|htm)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+    <FilesMatch "\.(js|css|xml|gz)$">
+     Header append Vary: Accept-Encoding
+   </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault "access plus 1 days"
+        ExpiresByType image/x-icon "access plus 604800 seconds"
+        ExpiresByType image/jpeg "access plus 604800 seconds"
+        ExpiresByType image/png "access plus 604800 seconds"
+        ExpiresByType image/gif "access plus 604800 seconds"
+        ExpiresByType application/x-shockwave-flash "access plus 604800 seconds"
+        ExpiresByType text/css "access plus 604800 seconds"
+        ExpiresByType text/javascript "access plus 604800 seconds"
+        ExpiresByType application/javascript "access plus 604800 seconds"
+        ExpiresByType application/x-javascript "access plus 604800 seconds"
+        ExpiresByType text/html "access plus 604800 seconds"
+        ExpiresByType application/xhtml+xml "access plus 604800 seconds"
+</ifModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain
+    AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript application/json
+    AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+    AddOutputFilterByType DEFLATE application/xhtml+xml application/rss+xml application/atom+xml
+    AddOutputFilterByType DEFLATE image/x-icon image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype
+    AddOutputFilterByType DEFLATE image/svg+xml application/xhtml+xml application/xml
+    AddOutputFilterByType DEFLATE application/x-font-ttf application/x-font-otf
+    AddOutputFilterByType DEFLATE font/truetype font/opentype
+    AddOutputFilterByType DEFLATE application/rdf+xml application/rss+xml application/atom+xml
+
+    <FilesMatch "\.(js|css|txt|html|htm|less)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+</IfModule>
+
+<ifModule mod_gzip.c>
+    mod_gzip_on Yes
+    mod_gzip_dechunk Yes
+    mod_gzip_item_include file .(html?|txt|css|js|php|pl)$
+    mod_gzip_item_include handler ^cgi-script$
+    mod_gzip_item_include mime ^text/.*
+    mod_gzip_item_include mime ^application/x-javascript.*
+    mod_gzip_item_exclude mime ^image/.*
+    mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+</ifModule>
+

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,12 +11,22 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('plugin/tether1.3.3/dist/css/tether.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('plugin/bootstrap.4/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {!! Html::style('/css/app.css') !!}
 
-    @yield('script_css')
+    <!-- Font Awesome -->
+    {!! Html::style('vendors/font-awesome/css/font-awesome.min.css') !!}
 
+    <!-- bootstrap-daterangepicker -->
+    {!! Html::style('vendors/bootstrap-daterangepicker/daterangepicker.css') !!}
+
+    @yield('css')
+
+    <!-- Scripts -->
+    <script>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
+    </script>
 </head>
 <body>
     <div id="app">
@@ -48,23 +58,25 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
+                            <li><a href="{{ route('RecordPoints.index') }}">Registra tus puntos</a></li>
+                            <li><a href="{{ route('CheckYourPoints.index') }}">Revisa tus puntos</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            Cerrar sesi&oacute;n
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
@@ -80,15 +92,27 @@
     </div>
 
     <!-- Scripts -->
+    {!! Html::script('/js/app.js') !!}
 
-    <script src="{{ asset('plugin/jquery3.2.1/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('plugin/tether1.3.3/dist/js/tether.min.js') }}"></script>
-    <script src="{{ asset('plugin/bootstrap.4/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- bootstrap-daterangepicker -->
+    {!! Html::script('vendors/moment/min/moment.min.js') !!}
+    {!! Html::script('vendors/bootstrap-daterangepicker/daterangepicker.js') !!}
 
-    @yield('script_js')
-
-    @yield('content_js')
+    <script>
+      $(document).find('.panel-heading').each(function (index, element) {
+          if($(this).next().hasClass('panel-heading')){
+            $(this).remove();
+            $(this).prev().remove();
+            $(this).next().remove();
+          }
+          if($(this).next().hasClass('form-group')){
+              if(typeof $(this).next().children('label').html() === "undefined"){
+                $(this).remove();
+              }
+          }
+      });
+    </script>
+    @yield('javascript')
 
 </body>
 </html>

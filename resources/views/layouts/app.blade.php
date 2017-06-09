@@ -11,7 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link href="{{ asset('plugin/tether1.3.3/dist/css/tether.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugin/bootstrap.4/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('script_css')
+
 </head>
 <body>
     <div id="app">
@@ -48,7 +53,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }}
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -75,6 +80,15 @@
     </div>
 
     <!-- Scripts -->
+
+    <script src="{{ asset('plugin/jquery3.2.1/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('plugin/tether1.3.3/dist/js/tether.min.js') }}"></script>
+    <script src="{{ asset('plugin/bootstrap.4/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+
+    @yield('script_js')
+
+    @yield('content_js')
+
 </body>
 </html>

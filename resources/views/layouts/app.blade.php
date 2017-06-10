@@ -11,13 +11,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    {!! Html::style('/css/app.css') !!}
-
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    {!! Html::style('vendors/font-awesome/css/font-awesome.min.css') !!}
-
+    <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- bootstrap-daterangepicker -->
-    {!! Html::style('vendors/bootstrap-daterangepicker/daterangepicker.css') !!}
+    <link href="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 
     @yield('css')
 
@@ -92,11 +90,10 @@
     </div>
 
     <!-- Scripts -->
-    {!! Html::script('/js/app.js') !!}
-
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- bootstrap-daterangepicker -->
-    {!! Html::script('vendors/moment/min/moment.min.js') !!}
-    {!! Html::script('vendors/bootstrap-daterangepicker/daterangepicker.js') !!}
+    <script src="{{ asset('vendors/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
     <script>
       $(document).find('.panel-heading').each(function (index, element) {

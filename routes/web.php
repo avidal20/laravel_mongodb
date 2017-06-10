@@ -24,13 +24,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::get('/', 'HomeController@index')->name('admin');
 
     //Rutas de modulos
-    Route::resource('category', 'Category\CategoryController',
-        [
-            'names' => 
-                [
-                    'index' => 'category.index',
-                ],
-        ]
-    );
+    Route::resource('categories', 'Category\CategoryController');
 
 });

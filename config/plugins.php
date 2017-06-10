@@ -59,7 +59,7 @@ return [
       'js' => 'vendors/starrr/dist/starrr.js',
     ],
 
-    'Datatables' => [
+    'Datatable' => [
 
       'css' => [
           'vendors/datatables.net-bs/css/dataTables.bootstrap.min.css',

@@ -45,7 +45,7 @@
 
             @if(!empty(config('plugins.'.$plugin.'.useJs')))
                 <script type="text/javascript">
-                  {!! config('plugins.'.$plugin.'.useJs') !!}
+                  {!! str_replace('\$','$',config('plugins.'.$plugin.'.useJs'))  !!}
                 </script>
             @endif
 

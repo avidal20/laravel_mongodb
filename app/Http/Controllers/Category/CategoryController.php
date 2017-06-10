@@ -52,7 +52,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return $this->view('admin.category.index');
+        $plugins[] = 'Datatable';
+        return $this->view('admin.category.index',compact('plugins'));
     }
 
     /**
